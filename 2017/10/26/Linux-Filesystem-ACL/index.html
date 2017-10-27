@@ -5,17 +5,17 @@
   
   <title>Linux Filesystem ACL | Secret Space</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Linux中每个文件（目录也可以认为是一类特殊的文件）都有自己的permission，在user、group、all 3个级别上，使用rwx来表示Read Write eXecute 3个permission。">
+  <meta name="description" content="Linux中每个文件（目录也可以认为是一类特殊的文件）都有自己的permission，在user、group、all 3个级别上，使用rwx来表示Read Write eXecute 3个permission。 在使用ls -l命令查看文件时，会在第一列以10个字符打印文件permission。 12345678910111213141516171819202122[root@linux /]#">
 <meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux Filesystem ACL">
 <meta property="og:url" content="http://blog.huadi.me/2017/10/26/Linux-Filesystem-ACL/index.html">
 <meta property="og:site_name" content="Secret Space">
-<meta property="og:description" content="Linux中每个文件（目录也可以认为是一类特殊的文件）都有自己的permission，在user、group、all 3个级别上，使用rwx来表示Read Write eXecute 3个permission。">
-<meta property="og:updated_time" content="2017-10-26T06:10:30.000Z">
+<meta property="og:description" content="Linux中每个文件（目录也可以认为是一类特殊的文件）都有自己的permission，在user、group、all 3个级别上，使用rwx来表示Read Write eXecute 3个permission。 在使用ls -l命令查看文件时，会在第一列以10个字符打印文件permission。 12345678910111213141516171819202122[root@linux /]#">
+<meta property="og:updated_time" content="2017-10-27T03:23:27.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux Filesystem ACL">
-<meta name="twitter:description" content="Linux中每个文件（目录也可以认为是一类特殊的文件）都有自己的permission，在user、group、all 3个级别上，使用rwx来表示Read Write eXecute 3个permission。">
+<meta name="twitter:description" content="Linux中每个文件（目录也可以认为是一类特殊的文件）都有自己的permission，在user、group、all 3个级别上，使用rwx来表示Read Write eXecute 3个permission。 在使用ls -l命令查看文件时，会在第一列以10个字符打印文件permission。 12345678910111213141516171819202122[root@linux /]#">
   
     <link rel="alternate" href="/atom.xml" title="Secret Space" type="application/atom+xml">
   
@@ -55,7 +55,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Søk"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://blog.huadi.me"></form>
@@ -87,11 +87,14 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>Linux中每个文件（目录也可以认为是一类特殊的文件）都有自己的permission，在user、group、all 3个级别上，使用rwx来表示Read Write eXecute 3个permission。</p>
+<p>在使用<code>ls -l</code>命令查看文件时，会在第一列以10个字符打印文件permission。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">[root@linux /]<span class="comment"># ls -l</span></div><div class="line">total 60</div><div class="line">lrwxrwxrwx.  1 root root     7 Oct 15 23:19 bin -&gt; usr/bin</div><div class="line">dr-xr-xr-x.  5 root root  4096 Oct 26 12:07 boot</div><div class="line">drwxr-xr-x  20 root root  3040 Oct 26 13:55 dev</div><div class="line">drwxr-xr-x. 91 root root  4096 Oct 26 17:25 etc</div><div class="line">drwxr-xr-x.  2 root root  4096 Nov  5  2016 home</div><div class="line">lrwxrwxrwx.  1 root root     7 Oct 15 23:19 lib -&gt; usr/lib</div><div class="line">lrwxrwxrwx.  1 root root     9 Oct 15 23:19 lib64 -&gt; usr/lib64</div><div class="line">drwx------.  2 root root 16384 Oct 15 23:18 lost+found</div><div class="line">drwxr-xr-x.  2 root root  4096 Nov  5  2016 media</div><div class="line">drwxr-xr-x.  2 root root  4096 Nov  5  2016 mnt</div><div class="line">drwxr-xr-x.  2 root root  4096 Nov  5  2016 opt</div><div class="line">dr-xr-xr-x  89 root root     0 Oct 26 13:55 proc</div><div class="line">dr-xr-x---.  7 root root  4096 Oct 26 21:44 root</div><div class="line">drwxr-xr-x  25 root root   780 Oct 26 17:25 run</div><div class="line">lrwxrwxrwx.  1 root root     8 Oct 15 23:19 sbin -&gt; usr/sbin</div><div class="line">drwxr-xr-x.  2 root root  4096 Nov  5  2016 srv</div><div class="line">dr-xr-xr-x  13 root root     0 Oct 26 21:55 sys</div><div class="line">drwxrwxrwt. 10 root root  4096 Oct 27 11:09 tmp</div><div class="line">drwxr-xr-x. 13 root root  4096 Oct 15 23:19 usr</div><div class="line">drwxr-xr-x. 19 root root  4096 Oct 15 15:22 var</div></pre></td></tr></table></figure>
+<p>第一个字符代表类型，l是链接，d代表目录，-代表文件。<br>后面9个字符以3个为一组，分别代表user、group、all三个级别的rwx权限。<br>例如<code>dr-xr-x---.  7 root root  4096 Oct 26 21:44 root</code></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.huadi.me/2017/10/26/Linux-Filesystem-ACL/" data-id="cj982l65e00013kuszgk1ovcu" class="article-share-link">Share</a>
+      <a data-url="http://blog.huadi.me/2017/10/26/Linux-Filesystem-ACL/" data-id="cj99c2swh0000y5us5o3mp3hw" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
@@ -141,7 +144,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Arkiv</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li></ul>
     </div>
@@ -151,7 +154,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Siste innlegg</h3>
     <div class="widget">
       <ul>
         
