@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://blog.huadi.me/2017/10/26/Linux-Filesystem-ACL/index.html">
 <meta property="og:site_name" content="Secret Space">
 <meta property="og:description" content="基础权限Linux中每个文件（目录也可以认为是一类特殊的文件）都有自己的permission，在user、group、all 3个级别上，使用rwx来表示Read Write eXecute 3个permission。 在使用ls -l命令查看文件时，会在第一列以10个字符打印文件permission。 12345678910111213141516171819202122[root@linux">
-<meta property="og:updated_time" content="2017-10-29T05:44:41.000Z">
+<meta property="og:updated_time" content="2018-01-05T13:42:25.208Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux Filesystem ACL">
 <meta name="twitter:description" content="基础权限Linux中每个文件（目录也可以认为是一类特殊的文件）都有自己的permission，在user、group、all 3个级别上，使用rwx来表示Read Write eXecute 3个permission。 在使用ls -l命令查看文件时，会在第一列以10个字符打印文件permission。 12345678910111213141516171819202122[root@linux">
@@ -53,9 +53,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://blog.huadi.me"></form>
@@ -97,15 +97,19 @@
 <li>o：other，其他用户权限，对应permission的8~10位</li>
 <li>a：all，所有上述3种权限</li>
 </ul>
-<p>rwxXst是权限，其中rwx比较简单，Xst下文会重点描述。</p>
+<p>rwxst是权限，其中rwx比较简单，st下文会简单解析。</p>
 <p>如果要把文件权限设置为user可读可写可执行，使用<code>chmod u=rwx file</code>赋予3个权限。如果禁止other的读写执行，使用<code>chmod o= file</code>。不难看出，等号后面接的是<strong>最终权限</strong>，如果不在等号后面的权限会被删除。<br>还可以接+-，赋予单个权限。如果要给user赋予写权限，可以使用<code>chmod u+w file</code>，如果要收回执行权限，使用<code>chmod u-x file</code>。在这种方法下，其他权限不会被影响。<br>最后要说的是拷贝权限。如果要给group赋予user当前权限，可以使用<code>chmod g=u file</code>。</p>
-<p>numeric模式直接使用位来标记权限，<code>chmod 777 file</code>赋予user、group和other所有权限。</p>
-<h3 id="Xst权限"><a href="#Xst权限" class="headerlink" title="Xst权限"></a>Xst权限</h3><p>【施工中】</p>
+<p>numeric模式直接使用位来标记权限。把每组rwx看成一个二进制数，如果有权限，则为1，没有为0，最终转换成十进制的数字。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">dr-xr-x---.  7 root root  4096 Oct 26 21:44 root</div><div class="line"> 101101000</div></pre></td></tr></table></figure>
+<p>在user上，有read和execute权限。二进制101转成十进制是5。在group上，同样也是5。在other上，则是0。所以此目录的权限是550。</p>
+<p><code>chmod 777 file</code>赋予user、group和other所有权限。  </p>
+<h3 id="st权限"><a href="#st权限" class="headerlink" title="st权限"></a>st权限</h3><p>s是user和group的x位特殊权限。当位于user时，表示setuid。对应位于group时，表示setgid。<br>当某个文件具有s权限时，表示运行文件的进程，拥有此文件owner的权限。例如，/bin/passwd，owner是root，但普通用户可以运行。passwd这个进程需要修改shadow文件以存储用户密码，所以它需要root权限。passwd的权限是rwsr-xr-x。当普通用户通过other的r-x运行passwd时，会通过user的rws获取root权限以修改shadow，完成修改密码的操作。</p>
+<p>t是other的x位特殊权限。意为sticky。<br>当某个目录具有t权限时，只有目录中的所有者才能修改和删除目录中文件。如果不设置此权限，则所有用户都可以修改和删除。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.huadi.me/2017/10/26/Linux-Filesystem-ACL/" data-id="cjbq5u9wv0002ulusadu5866n" class="article-share-link">Partager</a>
+      <a data-url="http://blog.huadi.me/2017/10/26/Linux-Filesystem-ACL/" data-id="cjc1z07tq0001fooyn197bdyn" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
@@ -117,7 +121,7 @@
 <nav id="article-nav">
   
     <a href="/2017/12/28/iptables/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Récent</strong>
+      <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
           iptables
@@ -127,7 +131,7 @@
   
   
     <a href="/2017/10/26/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Ancien</strong>
+      <strong class="article-nav-caption">Older</strong>
       <div class="article-nav-title">Hello World</div>
     </a>
   
@@ -145,7 +149,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Mot-clés</h3>
+    <h3 class="widget-title">Tags</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
     </div>
@@ -155,7 +159,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
       <a href="/tags/Linux/" style="font-size: 10px;">Linux</a>
     </div>
@@ -174,7 +178,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
@@ -202,8 +206,8 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2017 HUA Di<br>
-      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      &copy; 2018 HUA Di<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
