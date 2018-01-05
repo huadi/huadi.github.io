@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://blog.huadi.me/2017/10/26/Linux-Filesystem-ACL/index.html">
 <meta property="og:site_name" content="Secret Space">
 <meta property="og:description" content="基础权限Linux中每个文件（目录也可以认为是一类特殊的文件）都有自己的permission，在user、group、all 3个级别上，使用rwx来表示Read Write eXecute 3个permission。 在使用ls -l命令查看文件时，会在第一列以10个字符打印文件permission。 12345678910111213141516171819202122[root@linux">
-<meta property="og:updated_time" content="2018-01-05T13:42:25.208Z">
+<meta property="og:updated_time" content="2018-01-05T13:49:10.378Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux Filesystem ACL">
 <meta name="twitter:description" content="基础权限Linux中每个文件（目录也可以认为是一类特殊的文件）都有自己的permission，在user、group、all 3个级别上，使用rwx来表示Read Write eXecute 3个permission。 在使用ls -l命令查看文件时，会在第一列以10个字符打印文件permission。 12345678910111213141516171819202122[root@linux">
@@ -104,12 +104,12 @@
 <p>在user上，有read和execute权限。二进制101转成十进制是5。在group上，同样也是5。在other上，则是0。所以此目录的权限是550。</p>
 <p><code>chmod 777 file</code>赋予user、group和other所有权限。  </p>
 <h3 id="st权限"><a href="#st权限" class="headerlink" title="st权限"></a>st权限</h3><p>s是user和group的x位特殊权限。当位于user时，表示setuid。对应位于group时，表示setgid。<br>当某个文件具有s权限时，表示运行文件的进程，拥有此文件owner的权限。例如，/bin/passwd，owner是root，但普通用户可以运行。passwd这个进程需要修改shadow文件以存储用户密码，所以它需要root权限。passwd的权限是rwsr-xr-x。当普通用户通过other的r-x运行passwd时，会通过user的rws获取root权限以修改shadow，完成修改密码的操作。</p>
-<p>t是other的x位特殊权限。意为sticky。<br>当某个目录具有t权限时，只有目录中的所有者才能修改和删除目录中文件。如果不设置此权限，则所有用户都可以修改和删除。</p>
+<p>t是other的x位特殊权限。意为sticky。<br>当某个目录具有t权限时，只有目录中的所有者才能修改和删除目录中文件。如果不设置此权限，则所有用户都可以修改和删除。典型的应用是/tmp目录，临时目录所有用户都有权限写，但不能删除其他用户的文件，所以/tmp目录的权限一般是drwxrwxrwt。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.huadi.me/2017/10/26/Linux-Filesystem-ACL/" data-id="cjc1z07tq0001fooyn197bdyn" class="article-share-link">Share</a>
+      <a data-url="http://blog.huadi.me/2017/10/26/Linux-Filesystem-ACL/" data-id="cjc1z8jzs0000h7oyhofcid1b" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
